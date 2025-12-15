@@ -1072,10 +1072,35 @@
     </div>
   
   <script src="js/language-switch.js"></script>
+  <script>
+  // Обрабатываем только ссылки, которые открывают модалки
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    const target = link.getAttribute('href');
+    if (document.querySelector(target) && document.querySelector(target).classList.contains('modal')) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault(); // отменяем стандартный скролл
+        document.querySelector(target).style.display = "flex"; // открываем модалку
+        document.body.style.overflow = "hidden"; // блокируем прокрутку страницы
+      });
+    }
+  });
+
+  // Закрытие модалки
+  document.querySelectorAll('.modal .close').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const modal = this.closest('.modal');
+      modal.style.display = "none"; // скрываем модалку
+      document.body.style.overflow = ""; // разблокируем прокрутку
+    });
+  });
+</script>
+
 
 </body>
 
 </html>
+
 
 
 
